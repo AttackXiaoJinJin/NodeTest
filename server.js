@@ -19,6 +19,10 @@ let server=http.createServer((request,response)=>{
   //返回静态文件
   serveStatic(response,cache,absPath)
 })
+//加载一个Socket.IO
+let charServer=require("./lib/chat_server")
+charServer.listen(server)
+
 //启动 http 服务器
 //param:端口，callback
 server.listen(3000,()=>{
@@ -34,8 +38,8 @@ function send404(response) {
 }
 //发送文件
 function sendFile(response,filePath,fileContents) {
-  response.writeHead(200,{"Content-Type":mime.lookup(path.basename(filePath))})
-  // response.writeHead(200,{"Content-Type":mime.getType(path.basename(filePath))})
+  // response.writeHead(200,{"Content-Type":mime.lookup(path.basename(filePath))})
+  response.writeHead(200,{"Content-Type":mime.getType(path.basename(filePath))})
   response.end(fileContents)
 }
 //静态文件处理
