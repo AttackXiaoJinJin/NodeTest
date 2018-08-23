@@ -46,7 +46,7 @@ function sendFile(response,filePath,fileContents) {
 function serveStatic(response,cache,absPath) {
   //如果文件缓存在内存中，则从内存中返回文件
   if(cache[absPath]){
-    sendFile(response,absPatch,cache[absPath])
+    sendFile(response,absPath,cache[absPath])
   }else{
     fs.exists(absPath,(exists)=>{
       if(exists){

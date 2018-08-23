@@ -24,7 +24,7 @@ class Chat{
     //按照command中的空格，给分成数组
     let wordsArray=command.split(" ")
     // 去掉 /
-    let command=wordsArray[0].substring(1,wordsArray[0].length)
+    command=wordsArray[0].substring(1,wordsArray[0].length)
     let message=false
     switch (command){
       case "join":

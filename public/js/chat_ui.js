@@ -1,3 +1,64 @@
+//客户端初始化
+
+$(document).ready(()=>{
+  // let socket=io.connect("http://localhost")
+  let socket=io("http://localhost")
+  let chatApp=new Chat(socket)
+
+//  显示改变名字的结果
+  socket.on("nameResult",(result)=>{
+    let message
+    if(result.success){
+      message="你已更名为「"+result.name+"」。"
+    }else{
+      message=result.message
+    }
+    $("#messages").append(credible(message))
+  })
+
+// 显示房间改变的结果
+  socket.on("joinResult",(result)=>{
+    $("#room").text(result.room)
+    $("#messages").append(credible("房间已更改！"))
+  })
+
+// 显示接收到的消息
+  socket.on("message",(message)=>{
+    let newElement=$("<div></div>").text(message.text)
+    $("#messages").append(newElement)
+  })
+
+// 显示可用房间列表
+  socket.on("rooms",(rooms)=>{
+    $("#room-list").empty()
+    for(let room in rooms){
+      room=room.substring(1,room.length)
+      if(room!==""){
+        $("#room-list").append(doubtful(room))
+      }
+    }
+    $("#room-list div").click(()=>{
+      chatApp.processCommand("/join"+$(this).text())
+      $("#send-message").focus()
+    })
+  })
+
+//  定期请求可用房间列表
+  setInterval(()=>{
+    socket.emit("rooms")
+  },1000)
+
+  $("#send-message").focus()
+  $("#send-form").submit(()=>{
+    console.log()
+    processUserInput(chatApp,socket)
+    return false
+  })
+})
+
+
+
+
 //显示可疑的文本
 function doubtful(message) {
   return $("<div></div>").text(message)
@@ -21,8 +82,7 @@ function processUserInput(chatApp,socket) {
   }else{
     chatApp.sendMessage($("#room").text(),message)
     $("#messages").append(doubtful(message))
-
+    $("#messages").scrollTop($("#messages").prop("scrollHeight"))
   }
-
-
+  $("#send-message").val("")
 }
