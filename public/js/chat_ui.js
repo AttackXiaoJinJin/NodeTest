@@ -1,10 +1,10 @@
 //客户端初始化
-
 $(document).ready(()=>{
-  // let socket=io.connect("http://localhost")
-  let socket=io("http://localhost")
+  // let socket=io.connect()
+  let socket=io()
+  // console.log(socket)
   let chatApp=new Chat(socket)
-
+  // console.log(chatApp)
 //  显示改变名字的结果
   socket.on("nameResult",(result)=>{
     let message
@@ -18,12 +18,14 @@ $(document).ready(()=>{
 
 // 显示房间改变的结果
   socket.on("joinResult",(result)=>{
+    // console.log(result,"joinResult")
     $("#room").text(result.room)
     $("#messages").append(credible("房间已更改！"))
   })
 
 // 显示接收到的消息
   socket.on("message",(message)=>{
+    // console.log(message)
     let newElement=$("<div></div>").text(message.text)
     $("#messages").append(newElement)
   })
@@ -31,8 +33,10 @@ $(document).ready(()=>{
 // 显示可用房间列表
   socket.on("rooms",(rooms)=>{
     $("#room-list").empty()
+    console.log(rooms)
     for(let room in rooms){
-      room=room.substring(1,room.length)
+
+      // room=room.substring(1,room.length)
       if(room!==""){
         $("#room-list").append(doubtful(room))
       }
@@ -46,11 +50,11 @@ $(document).ready(()=>{
 //  定期请求可用房间列表
   setInterval(()=>{
     socket.emit("rooms")
-  },1000)
+    // console.log("rooms1111")
+  },6000)
 
   $("#send-message").focus()
   $("#send-form").submit(()=>{
-    console.log()
     processUserInput(chatApp,socket)
     return false
   })
@@ -61,6 +65,7 @@ $(document).ready(()=>{
 
 //显示可疑的文本
 function doubtful(message) {
+  //text返回其文本内容
   return $("<div></div>").text(message)
 }
 
@@ -81,6 +86,7 @@ function processUserInput(chatApp,socket) {
     }
   }else{
     chatApp.sendMessage($("#room").text(),message)
+    // console.log(message)
     $("#messages").append(doubtful(message))
     $("#messages").scrollTop($("#messages").prop("scrollHeight"))
   }

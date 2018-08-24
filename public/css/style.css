@@ -11,8 +11,13 @@ a{
   margin-right: auto;
 }
 #room{
-  background-color: #dddddd;
+  background-color: green;
   margin-bottom: 1em;
+  height: 30px;
+  font-size: 20px;
+  color: red;
+  text-align: center;
+  padding-top: 10px;
 }
 #messages{
   width: 690px;
@@ -28,6 +33,7 @@ a{
   width: 100px;
   height: 300px;
   overflow: auto;
+  background-color: yellow;
 }
 #room-list div{
   border-bottom: 1px solid #eeeeee;

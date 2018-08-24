@@ -5,10 +5,13 @@ class Chat{
   }
   //发送消息
   sendMessage(room,text){
+
     let message={
       room:room,
       text:text
     }
+    //发送给服务端
+    // console.log(this.socket)
     this.socket.emit("message",message)
   }
   //变更房间

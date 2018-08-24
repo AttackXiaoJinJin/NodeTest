@@ -19,15 +19,16 @@ let server=http.createServer((request,response)=>{
   //返回静态文件
   serveStatic(response,cache,absPath)
 })
-//加载一个Socket.IO
-let charServer=require("./lib/chat_server")
-charServer.listen(server)
-
 //启动 http 服务器
 //param:端口，callback
 server.listen(3000,()=>{
   console.log("服务器已启动")
 })
+//加载一个Socket.IO
+let charServer=require("./lib/chat_server")
+charServer.listen(server)
+
+
 
 
 //404
