@@ -11,6 +11,7 @@ class Watcher{
   watch(){
     let watcher=this
     console.log("33333")
+    //读取watchDir文件夹里所有的文件，并针对每个文件发送「bigCase」事件
     fs.readdir(this.watchDir,(error,files)=>{
       if(error) throw error
       for(let index in files){
@@ -27,8 +28,6 @@ class Watcher{
       watcher.watch()
     })
   }
-
-
 }
 
 //watchDir 要监控的目录，proDir 要修改的文件的目录

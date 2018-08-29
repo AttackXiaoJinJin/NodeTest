@@ -18,7 +18,8 @@ channel.emit("join")
 
 //移除监听
 channel.on("leave",(id)=>{
-  channel.removeListener("broadcast",()=>{})
+  channel.removeAllListeners("broadcast",()=>{})
+
 })
 
 let net=require("net")
@@ -28,8 +29,16 @@ let server=net.createServer((socket)=>{
   })
 }).listen(8888)
 
-
-
-
-
-
+let events=require("events")
+let myEmitter=new events.Emitter()
+myEmitter.on("error",(error)=>{
+  console.log("ERROR:"+error.message)
+})
+myEmitter.emit("error",new Error("出错啦！"))
+//============================================
+let events=require("events")
+let myEmitter=new events.Emitter()
+myEmitter.on("data",()=>{
+  //返回broadcast监听事件的长度，即用户人数
+  let length=this.listeners("broadcast").length
+})
