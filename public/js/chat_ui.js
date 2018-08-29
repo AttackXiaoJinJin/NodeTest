@@ -60,9 +60,6 @@ $(document).ready(()=>{
   })
 })
 
-
-
-
 //显示可疑的文本
 function doubtful(message) {
   //text返回其文本内容

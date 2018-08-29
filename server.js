@@ -28,9 +28,6 @@ server.listen(3000,()=>{
 let charServer=require("./lib/chat_server")
 charServer.listen(server)
 
-
-
-
 //404
 function send404(response) {
   response.writeHead(404,{"Content-Type":"text/plain"})
